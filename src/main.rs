@@ -43,12 +43,14 @@ impl Iterator for CompAllIterator {
         // if the base case n == 1
         while let Some((n, first_operand, second_operand)) = self.stack.pop() {
             if n == 1 {
-                return Some((0, 1));
+                return Some((first_operand, second_operand));
             } else {
                 // make a recursive call
                 // return the value
+                self.stack.push((n - 1, first_operand , second_operand - 1));
                 self.stack.push((n - 1, first_operand - 1, second_operand - 1));
                 self.stack.push((1, first_operand, second_operand));
+                
             
             }
         }
@@ -60,17 +62,26 @@ impl Iterator for CompAllIterator {
 
 
 
-}fn contains_duplicate(nums: Vec<i32>) -> bool {
-        
-        true
-    }
+}
+fn contains_duplicate(nums: Vec<i32>) -> bool {
+        for (left_index, right_index) in CompAllIterator::new(nums.len()-1){
+            if nums[left_index] == nums[right_index] {
+                return true
+            }
+        }
+        false
+}
 
     fn main(){
-       let w_dupes = vec!{1, 2, 3, 3};
+       let w_dupes = vec!{1, 2, 3};
+       let l_dupes = vec!{1, 2, 3, 3};
         let comp = CompAllIterator::new(w_dupes.len());
         for (left_operand, right_operand) in comp{
             println!("hello {left_operand} {right_operand}" )
         }
+        let a = contains_duplicate(w_dupes);
+        let b = contains_duplicate(l_dupes);
+        println!("a is {a}, b is {b}");
     }
 
 
