@@ -1,33 +1,4 @@
 
-struct HanoiIterator{
-    state: Vec<(usize, usize, usize, usize)>,
-
-}impl HanoiIterator {
-    fn new(n: usize) -> Self {
-        HanoiIterator {
-            state: vec![(n, 0, 1, 2)],
-        }
-    }
-}
-
-impl Iterator for HanoiIterator {
-    type Item = (usize, usize);
-
-    fn next(&mut self) -> Option<Self::Item> {
-        println!("function next() called!");
-        while let Some((n, from, aux, to)) = self.state.pop() {
-            if n == 1 {
-                return Some((from, to));
-            } else {
-                self.state.push((n - 1, aux, from, to));
-                self.state.push((1, from, aux, to));
-                self.state.push((n - 1, from, to, aux));
-               
-            }
-        }
-        None
-    }
-}
 struct CompAllIterator {
     stack: Vec<(usize, usize, usize, usize)>,
 }
